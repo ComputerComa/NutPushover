@@ -5,8 +5,7 @@ name: Go
 
 on:
   push:
-    #branches: [main]
-    tags: 'v*.*.*'
+    branches: [main]
 
 defaults:
  run:
@@ -14,10 +13,11 @@ defaults:
 
 jobs:
 
-  build:
+  main:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: checkout
+      uses: actions/checkout@v4
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -31,16 +31,28 @@ jobs:
     - name: version
       run: echo "RELVER=$(./upsnotify --version)" >> $GITHUB_OUTPUT
       id: version
+      
+    - name: Create Tag
+      uses: rickstaa/action-create-tag@v1
+      id: "tag_create"
+      with:
+          tag: ${{RELVER}}
+          tag_exists_error: true
+          message: Version {{steps.version.outputs.RELVER}}
+          
     - name: release
       uses: elgohr/Github-Release-Action@v5
+      id: release
       env:
         GH_TOKEN: ${{ secrets.api_token }}
       with:
-        title: New Release Version ${{RELVER}}
+        title: New Release Version {{steps.version.outputs.RELVER}}
         tag: $RELVER
+      if: ${{ steps.tag_create.outputs.tag_exists == false }}
 
     - name: upload artifact
       uses: softprops/action-gh-release@v2
       with: 
         files: upsnotify
         token: ${{ secrets.api_token }}
+      if: ${{ steps.tag_create.outputs.tag_exists == false }}

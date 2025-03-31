@@ -37,7 +37,7 @@ jobs:
       id: "tag_create"
       with:
           tag: ${{steps.version.outputs.RELVER}}
-          tag_exists_error: true
+          tag_exists_error: false
           message: Version ${{steps.version.outputs.RELVER}}
           github_token: ${{ secrets.api_token }}
           

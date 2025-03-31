@@ -8,6 +8,10 @@ on:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
 
+defaults:
+ run:
+  working-directory: /home/runner/work/NutPushover/NutPushover/
+
 jobs:
 
   build:
@@ -22,7 +26,7 @@ jobs:
         go-version: '1.23.6'
 
     - name: Build
-      run: go build -o upsnotify -v ./...
+      run: go build -o upsnotify -v .
 
     - name: version
       run: echo "::set-output name=version::$(./upsnotify --version)"

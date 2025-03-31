@@ -48,12 +48,13 @@ jobs:
         GH_TOKEN: ${{ secrets.api_token }}
       with:
         title: New Release Version ${{steps.version.outputs.RELVER}}
-        tag: $RELVER
+        tag: ${{steps.version.outputs.RELVER}}
       if: ${{ steps.tag_create.outputs.tag_exists == 'false' }}
 
     - name: upload artifact
       uses: softprops/action-gh-release@v2
       with: 
         files: upsnotify
+        tag: ${{steps.version.outputs.RELVER}}
         token: ${{ secrets.api_token }}
       if: ${{ steps.tag_create.outputs.tag_exists == 'false' }}

@@ -39,6 +39,7 @@ jobs:
           tag: ${{steps.version.outputs.RELVER}}
           tag_exists_error: true
           message: Version ${{steps.version.outputs.RELVER}}
+          github_token: ${{ secrets.api_token }}
           
     - name: release
       uses: elgohr/Github-Release-Action@v5

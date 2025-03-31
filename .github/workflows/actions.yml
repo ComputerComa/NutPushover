@@ -55,6 +55,6 @@ jobs:
       uses: softprops/action-gh-release@v2
       with: 
         files: upsnotify
-        tag: ${{steps.version.outputs.RELVER}}
+        tag_name: ${{steps.version.outputs.RELVER}}
         token: ${{ secrets.api_token }}
       if: ${{ steps.tag_create.outputs.tag_exists == 'false' }}

@@ -1,0 +1,40 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ 'v*.*.*' ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23.6'
+
+    - name: Build
+      run: go build -o upsnotify -v ./...
+
+    - name: version
+      run: echo "::set-output name=version::$(./upsnotify --version)"
+      id: version
+    - name: release
+      uses: elgohr/Github-Release-Action@v5
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        title: New Release Version  ${{ steps.version.outputs.version }}
+        tag: ${{ github.ref }}
+
+    - name: upload artifact
+      uses: softprops/action-gh-release@v2
+      with: 
+        files: upsnotify

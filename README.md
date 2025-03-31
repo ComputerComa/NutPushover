@@ -37,7 +37,7 @@ PUSHOVER_Priority=0
 ### Using Priorities
 
 From the Pushover.net [[API Docs](https://pushover.net/api#priority)]
-```
+
 
 Lowest Priority (-2)
 
@@ -63,4 +63,3 @@ Emergency Priority (2)
 
 Emergency-priority notifications are similar to high-priority notifications, but they are repeated until the notification is acknowledged by the user. These are designed for dispatching and on-call situations where it is critical that a notification be repeatedly shown to the user (or all users of the group that the message was sent to) until it is acknowledged. The first user in a group to acknowledge a message will cancel retries for all other users in the group. 
 
-```

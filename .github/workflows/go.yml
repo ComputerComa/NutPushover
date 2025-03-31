@@ -29,15 +29,15 @@ jobs:
       run: go build -o upsnotify -v .
 
     - name: version
-      run: echo "::set-output name=version::$(./upsnotify --version)"
+      run: echo "version=$(./upsnotify --version)" >> $GITHUB_OUTPUT
       id: version
     - name: release
       uses: elgohr/Github-Release-Action@v5
       env:
         GH_TOKEN: ${{ secrets.api_token }}
       with:
-        title: New Release Version  ${{ steps.version.outputs.version }}
-        tag: ${{ github.ref }}
+        title: New Release Version $version
+        tag: $version
 
     - name: upload artifact
       uses: softprops/action-gh-release@v2

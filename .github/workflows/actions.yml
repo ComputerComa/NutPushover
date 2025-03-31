@@ -47,7 +47,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.api_token }}
       with:
-        title: New Release Version ${{steps.version.outputs.RELVER}}
+        title: Version ${{steps.version.outputs.RELVER}}
         tag: ${{steps.version.outputs.RELVER}}
       if: ${{ steps.tag_create.outputs.tag_exists == 'false' }}
 

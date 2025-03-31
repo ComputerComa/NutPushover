@@ -31,7 +31,7 @@ func parsePriority(p string) int {
 }
 
 func main() {
-	version := "1.0.0"
+	version := "0.0.1"
 	if os.Args[1] == "-v" || os.Args[1] == "--v" || os.Args[1] == "--version" || os.Args[1] == "-version" {
 		fmt.Println(version)
 		os.Exit(0)

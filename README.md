@@ -1,7 +1,7 @@
 # Nut Pushover
 
-Uses Pushover to send notifications for Network Upstools Monitor
-[![Go](https://github.com/ComputerComa/NutPushover/actions/workflows/go.yml/badge.svg)](https://github.com/ComputerComa/NutPushover/actions/workflows/go.yml)
+Uses Pushover to send notifications for Network Upstools Monitor written in GO
+[![Go](https://github.com/ComputerComa/NutPushover/actions/workflows/actions.yml/badge.svg)](https://github.com/ComputerComa/NutPushover/actions/workflows/actions.yml)
 
 ## upsnotify
 

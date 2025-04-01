@@ -50,7 +50,7 @@ func main() {
 	app := pushover.New(apiKey)
 	recipient := pushover.NewRecipient(userKey)
 	title := fmt.Sprintf("UPS: %s (%s)", notificationType, upsName)
-	message := pushover.NewMessageWithTitle(title, notificationMessage)
+	message := pushover.NewMessageWithTitle(notificationMessage, title)
 
 	if len(sound) != 0 {
 		message.Sound = sound

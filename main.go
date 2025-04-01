@@ -31,13 +31,18 @@ func parsePriority(p string) int {
 }
 
 func main() {
-	version := "1.0.1"
+	version := "1.0.2"
 	if os.Args[1] == "-v" || os.Args[1] == "--v" || os.Args[1] == "--version" || os.Args[1] == "-version" {
 		fmt.Println(version)
 		os.Exit(0)
 	}
 
 	godotenv.Load("/etc/default/upsnotifyPushover")
+	hostname, herr := os.Hostname()
+
+	if herr != nil {
+		log.Panic(herr)
+	}
 	notificationType := os.Getenv("NOTIFYTYPE")
 	priority := os.Getenv("PUSHOVER_Priority")
 	sound := os.Getenv("PUSHOVER_Sound")
@@ -50,7 +55,8 @@ func main() {
 	app := pushover.New(apiKey)
 	recipient := pushover.NewRecipient(userKey)
 	title := fmt.Sprintf("UPS: %s (%s)", notificationType, upsName)
-	message := pushover.NewMessageWithTitle(notificationMessage, title)
+	fnotifmsg := fmt.Sprintf("%s -- %s", hostname, notificationMessage)
+	message := pushover.NewMessageWithTitle(fnotifmsg, title)
 
 	if len(sound) != 0 {
 		message.Sound = sound
@@ -63,6 +69,7 @@ func main() {
 			message.Expire = expire
 
 		}
+		message.Priority = tmp_pri
 	}
 
 	response, err := app.SendMessage(message, recipient)
